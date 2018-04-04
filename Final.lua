@@ -75,6 +75,17 @@ function scene:create( event )
     local loseBackground
     local winBackground
 
+    local correctSound
+    local correctChannel
+    local wrongSound
+    local wrongChannel
+    local winSound
+    local winChannel
+    local loseSound
+    local loseChannel
+    local dropSound
+    local dropChannel
+
     local sceneGroup = self.view
    
     ----------------------------------------------------------------------------------------------------------
@@ -166,11 +177,14 @@ function scene:create( event )
 
    local function UpdateHearts() 
         if ( lives == 1 ) then
+          dropChannel = audio.play(dropSound)
           heart1.isVisible = false
        elseif ( lives == 2 ) then
+          dropChannel = audio.play(dropSound)
           heart2.isVisible = false
         elseif ( lives == 0 ) then
-           heart3.isVisible = false
+          loseChannel = audio.play(loseSound)
+          heart3.isVisible = false
           numericField.isVisible = false  
           loseBackground.isVisible = true
           questionObject.isVisible = false
@@ -310,6 +324,7 @@ function scene:create( event )
                 print("counter = " ..counter)
                 points.text = "Points: "..counter
                 timer.performWithDelay(2000, ReplaceTimer)
+                correctChannel = audio.play(correctSound)
 
             else 
                 transition.to(incorrectCat, { x = 300, alpha = 1, time = 1000})
@@ -321,6 +336,7 @@ function scene:create( event )
                 lives = lives - 1
                 UpdateHearts()
                 timer.performWithDelay(2000, ReplaceTimer)
+                wrongChannel = audio.play(wrongSound)
             end
 
             if (counter == 5) then
@@ -331,6 +347,7 @@ function scene:create( event )
               correctMouse.isVisible = false
               correctObject.isVisible = false
               winBackground.isVisible = true
+              winChannel = audio.play(winSound)
               
             end
 
@@ -532,6 +549,20 @@ function scene:create( event )
    winBackground.x = 520
    winBackground.y = 400
 
+   --create the sound
+    correctSound = audio.loadStream("Sounds/correct.mp3")
+
+    --create the sound
+    wrongSound = audio.loadStream("Sounds/wrong.mp3")
+
+    --create the sound
+    winSound = audio.loadStream("Sounds/win.mp3")
+
+    --create the sound
+   loseSound = audio.loadStream("Sounds/lose.mp3")
+
+   --create the sound
+   drop = audio.loadStream("Sounds/drop.mp3")
     -------------------------------------------------------------------------
     --add event listener
 

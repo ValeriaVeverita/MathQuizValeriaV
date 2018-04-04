@@ -58,6 +58,13 @@ function scene:create( event )
     local button
     local buttonText
 
+    local correctSound
+    local correctChannel
+    local wrongSound
+    local wrongChannel
+    local pannelSound
+    local pannelChannel
+
     local sceneGroup = self.view
    
     ----------------------------------------------------------------------------------------------------------
@@ -171,7 +178,7 @@ function scene:create( event )
     ------------------------------------------------------------------------------------------------------------------
     local function AskQuestion()
         --pich randomly the operator
-        randomOperator = math.random(1,2)
+        randomOperator = math.random(1,3)
         -- generate randomly an operation
         randomNumber1 = math.random(1,10)
         randomNumber2 = math.random(1,3)
@@ -187,6 +194,17 @@ function scene:create( event )
             correctAnswer = math.sqrt(randomNumber1)
             --create question in text object
             questionObject.text = " √"..randomNumber1.." = "
+
+        elseif (randomOperator == 3)then
+            --Factorial
+            number = math.random(1,10)
+            product = 1
+
+          for i=1,number do
+               product = product * i
+           end
+            correctAnswer = product
+            questionObject.text = number .. "! = "
         end
     end
     
@@ -222,6 +240,7 @@ function scene:create( event )
                 counter = counter + 1
                 print("counter = " ..counter)
                 points.text = "Points: "..counter
+                correctChannel = audio.play(correctSound)
 
             else 
                 transition.to(incorrectCat, { x = 300, alpha = 1, time = 1000})
@@ -230,6 +249,7 @@ function scene:create( event )
                 timer.performWithDelay(2000, HideCorrect)
                 tellCorrect.text = "Correct answer is "..correctAnswer
                 tellCorrect.isVisible = true
+                wrongChannel = audio.play(wrongSound)
             end
 
             if (counter == 5) then
@@ -243,6 +263,7 @@ function scene:create( event )
               cong.isVisible = true
               buttonText.isVisible = true
               button.isVisible = true
+              pannelChannel = audio.play(pannelSound)
             end
 
         end 
@@ -266,7 +287,7 @@ function scene:create( event )
     
 
     --create the floor
-    floor = display.newRect(500, 500, 800, 50)
+    floor = display.newRect(500, 800, 800, 50)
     sceneGroup:insert(floor)
     physics.addBody( floor, "static", {friction = 0.5, bounce = 0.3})
     floor.alpha = 0
@@ -372,6 +393,15 @@ function scene:create( event )
     buttonText.isVisible = false
     --set the color
     buttonText:setFillColor(201/255, 206/255, 209/255)
+
+    --create the sound
+    correctSound = audio.loadStream("Sounds/correct.mp3")
+
+    --create the sound
+    wrongSound = audio.loadStream("Sounds/wrong.mp3")
+
+    --create the sound
+    pannelSound = audio.loadStream("Sounds/win.mp3")
 
     -------------------------------------------------------------------------
     --add event listener

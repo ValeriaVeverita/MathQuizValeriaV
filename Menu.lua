@@ -5,7 +5,7 @@ local scene = composer.newScene()
 --Function:changeScene
 --Description: when touch the button, it reacts and change the scene
 local function changeScene( )
-	composer.gotoScene("Intro", {effect = "fade", time = 1000})
+	composer.gotoScene("Intro", {effect = "fade", time = 0})
 end
 
 -- create()

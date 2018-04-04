@@ -60,6 +60,15 @@ function scene:create( event )
     local button
     local buttonText
 
+    local moveSound
+    local moveChannel
+    local correctSound
+    local correctChannel
+    local wrongSound
+    local wrongChannel
+    local pannelSound
+    local pannelChannel
+
     local sceneGroup = self.view
    
     ----------------------------------------------------------------------------------------------------------
@@ -236,6 +245,8 @@ function scene:create( event )
         incorrectCat.alpha = 0
         incorrectObject.alpha = 0
         tellCorrect.isVisible = false
+        audio.stop(2)
+        audio.stop(3)
     end
 
     local function numericFieldListener( event )
@@ -257,6 +268,7 @@ function scene:create( event )
                 counter = counter + 1
                 print("counter = " ..counter)
                 points.text = "Points: "..counter
+                correctChannel = audio.play(correctSound, {channel = 2})
 
             else
                transition.to(incorrectCat, { x = 300, alpha = 1, time =1000})
@@ -265,6 +277,7 @@ function scene:create( event )
                timer.performWithDelay(2000, HideCorrect)
                tellCorrect.text = "Correct answer is "..correctAnswer
                tellCorrect.isVisible = true
+               wrongChannel = audio.play(wrongSound, {channel = 3})
             end
 
             if (counter == 5) then
@@ -278,6 +291,8 @@ function scene:create( event )
               cong.isVisible = true
               buttonText.isVisible = true
               button.isVisible = true
+              physics.addBody(floor, {density = 1})
+              pannelChannel = audio.play(pannelSound)
             end
         end
     end 
@@ -422,6 +437,15 @@ function scene:create( event )
     buttonText.isVisible = false
     --set the color
     buttonText:setFillColor(255/255, 170/255, 14/255)
+
+    --create the sound
+    correctSound = audio.loadStream("Sounds/correct.mp3")
+
+    --create the sound
+    wrongSound = audio.loadStream("Sounds/wrong.mp3")
+
+    --create the sound
+    pannelSound = audio.loadStream("Sounds/win.mp3")
     ------------------------------------------------------------------------------------------------------------------------------------------------
 
     

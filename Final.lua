@@ -58,8 +58,7 @@ function scene:create( event )
     local points
     local counter = 0
     local cong
-    local button
-    local buttonText
+   
     local product = 1
     
     --variables for timer

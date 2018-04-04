@@ -263,7 +263,11 @@ function scene:create( event )
               cong.isVisible = true
               buttonText.isVisible = true
               button.isVisible = true
+<<<<<<< HEAD
               pannelChannel = audio.play(pannelSound)
+=======
+               physics.addBody( floor, {friction = 0.5, bounce = 0.3})
+>>>>>>> 6fa4173283da4730efeb662b23babb0d14bfcf45
             end
 
         end 

@@ -278,6 +278,7 @@ function scene:create( event )
               cong.isVisible = true
               buttonText.isVisible = true
               button.isVisible = true
+              physics.addBody( floor, {friction = 0.5, bounce = 0.3})
             end
         end
     end 
